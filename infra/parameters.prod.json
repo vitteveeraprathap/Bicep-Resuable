@@ -3,7 +3,6 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "location": { "value": "southeastasia" },
-    "environment": { "value": "prod" },
     "appServicePlanName": { "value": "prod-iot-appserv" },
     "webAppName": { "value": "prod-iot-webap" },
     "storageAccountName": { "value": "prodiotstora77" },

@@ -3,7 +3,6 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "location": { "value": "southeastasia" },
-    "environment": { "value": "qa" },
     "appServicePlanName": { "value": "qa-iot-appserv" },
     "webAppName": { "value": "qa-iot-web5" },
     "storageAccountName": { "value": "qaiotstora56" },
