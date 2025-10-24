@@ -1,0 +1,14 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": { "value": "southeastasia" },
+    "environment": { "value": "qa" },
+    "appServicePlanName": { "value": "qa-IOT-appserviceplan" },
+    "webAppName": { "value": "qa-IOT-webapp" },
+    "storageAccountName": { "value": "qaIOTstorage01" },
+    "keyVaultName": { "value": "qa-IOT-kv01" },
+    "acrName": { "value": "qa-IOT-acr01" },
+    "logAnalyticsName": { "value": "qa-IOT-la01" }
+  }
+}
