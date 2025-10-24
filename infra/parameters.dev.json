@@ -4,11 +4,11 @@
   "parameters": {
     "location": { "value": "southeastasia" },
     "environment": { "value": "dev" },
-    "appServicePlanName": { "value": "dev-iot-appserviceplan" },
-    "webAppName": { "value": "dev-iot-webapp" },
-    "storageAccountName": { "value": "deviotstorage01" },
-    "keyVaultName": { "value": "dev-iot-kv01" },
-    "acrName": { "value": "dev-iot-acr01" },
-    "logAnalyticsName": { "value": "dev-iot-la01" }
+    "appServicePlanName": { "value": "dev-iot-appserv" },
+    "webAppName": { "value": "dev-iot-web" },
+    "storageAccountName": { "value": "deviotstora" },
+    "keyVaultName": { "value": "dev-iot-kv015" },
+    "acrName": { "value": "dev-iot-acr015" },
+    "logAnalyticsName": { "value": "dev-iot-la015" }
   }
 }
