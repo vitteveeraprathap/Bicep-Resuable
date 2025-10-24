@@ -7,7 +7,7 @@
     "webAppName": { "value": "prod-iot-webap" },
     "storageAccountName": { "value": "prodiotstora77" },
     "keyVaultName": { "value": "prod-iot-kv015" },
-    "acrName": { "value": "prod-iot-acr015" },
+    "acrName": { "value": "prodiotacr019" },
     "logAnalyticsName": { "value": "prod-iot-la015" }
   }
 }

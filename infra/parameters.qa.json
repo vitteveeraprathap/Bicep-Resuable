@@ -7,7 +7,7 @@
     "webAppName": { "value": "qa-iot-web5" },
     "storageAccountName": { "value": "qaiotstora56" },
     "keyVaultName": { "value": "qa-iot-kv0188" },
-    "acrName": { "value": "qa-iot-acr015" },
+    "acrName": { "value": "qaiotacr015" },
     "logAnalyticsName": { "value": "qa-iot-la015" }
   }
 }
