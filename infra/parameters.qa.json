@@ -4,11 +4,11 @@
   "parameters": {
     "location": { "value": "southeastasia" },
     "environment": { "value": "qa" },
-    "appServicePlanName": { "value": "qa-IOT-appserviceplan" },
-    "webAppName": { "value": "qa-IOT-webapp" },
-    "storageAccountName": { "value": "qaIOTstorage01" },
-    "keyVaultName": { "value": "qa-IOT-kv01" },
-    "acrName": { "value": "qa-IOT-acr01" },
-    "logAnalyticsName": { "value": "qa-IOT-la01" }
+    "appServicePlanName": { "value": "qa-iot-appserviceplan" },
+    "webAppName": { "value": "qa-iot-webapp" },
+    "storageAccountName": { "value": "qaiotstorage01" },
+    "keyVaultName": { "value": "qa-iot-kv01" },
+    "acrName": { "value": "qa-iot-acr01" },
+    "logAnalyticsName": { "value": "qa-iot-la01" }
   }
 }

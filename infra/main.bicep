@@ -1,5 +1,4 @@
 param location string
-param environment string
 
 param appServicePlanName string
 param webAppName string
