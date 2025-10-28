@@ -1,13 +1,13 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2017-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "location": { "value": "southeastasia" },
-    "appServicePlanName": { "value": "dev-iot-appserv9" },
-    "webAppName": { "value": "dev-iot-web9" },
-    "storageAccountName": { "value": "deviotstora9" },
-    "keyVaultName": { "value": "dev-iot-kv019" },
-    "acrName": { "value": "deviotacr019" },
-    "logAnalyticsName": { "value": "dev-iot-la019" }
+    "appServicePlanName": { "value": "dev-iot-appserv7" },
+    "webAppName": { "value": "dev-iot-web7" },
+    "storageAccountName": { "value": "deviotstora7" },
+    "keyVaultName": { "value": "dev-iot-kv017" },
+    "acrName": { "value": "deviotacr017" },
+    "logAnalyticsName": { "value": "dev-iot-la017" }
   }
 }
