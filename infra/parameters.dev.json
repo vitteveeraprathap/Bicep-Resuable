@@ -3,11 +3,11 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "location": { "value": "southeastasia" },
-    "appServicePlanName": { "value": "dev-iot-appserv89" },
-    "webAppName": { "value": "dev-iot-web89" },
+    "appServicePlanName": { "value": "dev-iot-appserv895" },
+    "webAppName": { "value": "dev-iot-web895" },
     "storageAccountName": { "value": "qaappstorage12" },
-    "keyVaultName": { "value": "dev-iot-kv0189" },
-    "acrName": { "value": "deviotacr0189" },
-    "logAnalyticsName": { "value": "dev-iot-la0189" }
+    "keyVaultName": { "value": "dev-iot-kv01895" },
+    "acrName": { "value": "deviotacr01895" },
+    "logAnalyticsName": { "value": "dev-iot-la01895" }
   }
 }
