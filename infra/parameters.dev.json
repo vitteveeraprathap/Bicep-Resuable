@@ -3,11 +3,11 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "location": { "value": "southeastasia" },
-    "appServicePlanName": { "value": "dev-iot-appserv7" },
-    "webAppName": { "value": "dev-iot-web7" },
-    "storageAccountName": { "value": "deviotstora7" },
-    "keyVaultName": { "value": "dev-iot-kv017" },
-    "acrName": { "value": "deviotacr017" },
-    "logAnalyticsName": { "value": "dev-iot-la017" }
+    "appServicePlanName": { "value": "dev-iot-appserv8" },
+    "webAppName": { "value": "dev-iot-web8" },
+    "storageAccountName": { "value": "deviotstora8" },
+    "keyVaultName": { "value": "dev-iot-kv018" },
+    "acrName": { "value": "deviotacr018" },
+    "logAnalyticsName": { "value": "dev-iot-la018" }
   }
 }
