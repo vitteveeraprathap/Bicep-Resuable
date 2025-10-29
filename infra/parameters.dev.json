@@ -5,7 +5,7 @@
     "location": { "value": "southeastasia" },
     "appServicePlanName": { "value": "dev-iot-appserv89" },
     "webAppName": { "value": "dev-iot-web89" },
-    "storageAccountName": { "value": "deviotstora89" },
+    "storageAccountName": { "value": "qaappstorage12" },
     "keyVaultName": { "value": "dev-iot-kv0189" },
     "acrName": { "value": "deviotacr0189" },
     "logAnalyticsName": { "value": "dev-iot-la0189" }
