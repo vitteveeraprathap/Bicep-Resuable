@@ -31,6 +31,13 @@ jobs:
           az bicep install
           az bicep upgrade
 
+      # 👇 New Linting step here
+      - name: Lint Bicep Files
+        run: |
+          echo "Running Bicep linting..."
+          az bicep build --file infra/main.bicep --no-restore
+          az bicep lint --file infra/main.bicep
+
       - name: Validate Template
         run: |
           az deployment group validate \
