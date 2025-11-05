@@ -10,7 +10,7 @@ on:
         type: choice
         options:
           - dev
-          - qa
+          - uat
           - prod
 
 jobs:
