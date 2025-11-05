@@ -1,14 +1,12 @@
-//This script creates a resource group under the existing subscription
+@description('Name of the Resource Group')
+param rgName string
 
-targetScope = 'subscription'
+@description('Location for the Resource Group')
+param location string = 'southeastasia'
 
-// Parameters
-param location string
-param resourceGroupName string
-param tags object
-
-resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: resourceGroupName
+resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+  name: rgName
   location: location
-  tags: tags
 }
+
+output resourceGroupName string = rg.name
