@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "storageAccountName": {
-      "value": "prodstreact01"
+      "value": "devstorage12345"
     },
     "location": {
       "value": "southeastasia"
