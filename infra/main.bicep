@@ -48,7 +48,7 @@ module monitoring './modules/monitoring.bicep' = {
   }
 }
 
-output webAppUrl string = app.outputs.webAppUrl
+//output webAppUrl string = app.outputs.webAppUrl
 output storageAccountId string = storage.outputs.storageAccountId
 output keyVaultId string = security.outputs.keyVaultId
 output acrId string = container.outputs.acrId
