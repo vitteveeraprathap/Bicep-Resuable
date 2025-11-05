@@ -1,0 +1,28 @@
+name: Enforce JIRA Branch Naming (feature/se-#### only)
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - master
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  check-branch-name:
+    runs-on: ubuntu-latest
+    name: Validate source branch name
+    steps:
+      - name: Check if branch name includes JIRA key
+        run: |
+          # Get source (head) branch of the PR
+          BRANCH="${{ github.head_ref }}"
+          echo "Source branch: $BRANCH"
+
+          # Allow ONLY branches that start with "feature/se-" followed by digits
+          if echo "$BRANCH" | grep -Eq '^feature/se-[0-9]+$'; then
+            echo "✅ Branch name is valid (matches feature/se-#### pattern)"
+          else
+            echo "::error::❌ Invalid branch name. Only 'feature/se-<JIRA_ID>' is allowed for merging into develop/master."
+            echo "Example: feature/se-4650"
+            exit 1
+          fi
