@@ -1,0 +1,80 @@
+name: JIRA Commit & PR Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    # checks pushes too (useful for branches that aren't protected)
+    branches: ['**']
+
+jobs:
+  check-jira:
+    runs-on: ubuntu-latest
+    name: Validate JIRA keys in commits and PR title
+    steps:
+      - name: Checkout full repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # need full history to inspect commits
+
+      - name: Set up
+        run: |
+          set -e
+          echo "EVENT_NAME=${{ github.event_name }}" >> $GITHUB_ENV
+          echo "ACTOR=${{ github.actor }}" >> $GITHUB_ENV
+
+      - name: Determine commit range
+        id: range
+        run: |
+          set -e
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "range=${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}" >> $GITHUB_OUTPUT
+            echo "pr_title<<EOF" >> $GITHUB_OUTPUT
+            echo "${{ github.event.pull_request.title }}" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            # push event: use before..after
+            before="${{ github.event.before }}"
+            after="${{ github.event.after }}"
+            echo "range=${before}..${after}" >> $GITHUB_OUTPUT
+            echo "pr_title=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Validate commit messages
+        run: |
+          set -e
+          RANGE="${{ steps.range.outputs.range }}"
+          PR_TITLE="${{ steps.range.outputs.pr_title }}"
+          echo "Checking commits in range: $RANGE"
+          invalid=0
+
+          # If range resolves to the same SHAs (e.g., initial push), guard
+          if [ -z "$RANGE" ]; then
+            echo "No range available; skipping commit checks."
+          else
+            for commit in $(git rev-list $RANGE); do
+              # take the first non-empty line from commit message
+              msg=$(git log --format=%B -n 1 $commit | sed -n '1p' | tr -d '\r')
+              echo "Commit $commit: \"$msg\""
+              if ! echo "$msg" | grep -Eq '^[A-Z]{2,10}-[0-9]+:'; then
+                echo "::error::Commit $commit does not start with JIRA key: \"$msg\""
+                invalid=1
+              fi
+            done
+          fi
+
+          # For pull requests (or when using squash merges), also check PR title:
+          if [ -n "$PR_TITLE" ]; then
+            echo "PR title: \"$PR_TITLE\""
+            if ! echo "$PR_TITLE" | grep -Eq '^[A-Z]{2,10}-[0-9]+:'; then
+              echo "::error::Pull request title does not start with JIRA key: \"$PR_TITLE\""
+              invalid=1
+            fi
+          fi
+
+          if [ "$invalid" -eq 1 ]; then
+            echo "JIRA validation failed."
+            exit 1
+          fi
+
+          echo "All commits/PR title include a JIRA key."
