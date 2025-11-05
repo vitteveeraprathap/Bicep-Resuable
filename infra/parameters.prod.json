@@ -1,7 +1,7 @@
 {
   "parameters": {
     "storageAccountName": {
-      "value": "uatstorageacct01"
+      "value": "uatstrgeact01"
     },
     "location": {
       "value": "southeastasia"
