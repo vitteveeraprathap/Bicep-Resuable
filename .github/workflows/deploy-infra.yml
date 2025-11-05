@@ -33,7 +33,7 @@ jobs:
 
       - name: Validate Bicep file
         run: |
-          az bicep build --file infra/main.bicep
+          az bicep build --file infra/str.bicep
 
       - name: Deploy Bicep to Azure
         run: |
