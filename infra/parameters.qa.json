@@ -1,13 +1,10 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
-  "contentVersion": "1.0.0.0",
   "parameters": {
-    "location": { "value": "southeastasia" },
-    "appServicePlanName": { "value": "qa-iot-appserv" },
-    "webAppName": { "value": "qa-iot-web5" },
-    "storageAccountName": { "value": "qaiotstora56" },
-    "keyVaultName": { "value": "qa-iot-kv0188" },
-    "acrName": { "value": "qaiotacr015" },
-    "logAnalyticsName": { "value": "qa-iot-la015" }
+    "storageAccountName": {
+      "value": "prodstorageacct01"
+    },
+    "location": {
+      "value": "westus2"
+    }
   }
 }
