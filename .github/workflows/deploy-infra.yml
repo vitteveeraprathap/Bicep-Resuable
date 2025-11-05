@@ -16,7 +16,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,26 +26,22 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Set environment variables
+      - name: Validate Bicep templates
         run: |
-          echo "PARAM_FILE=infra/parameters.${{ github.event.inputs.environment }}.json" >> $GITHUB_ENV
-          echo "RESOURCE_GROUP=${{ secrets.AZURE_RG }}" >> $GITHUB_ENV
+          az bicep build --file infra/rg.bicep
+          az bicep build --file infra/str.bicep
 
-      - name: Validate Bicep file
-        run: |
-          az bicep build --file infra/**.bicep
-
-      - name: Deploy RG 
+      - name: Deploy Resource Group
         run: |
           az deployment sub create \
-            --location westus2 \
-            --template-file infra/rg.bicep
-            --parameters @"$PARAM_FILE"
+            --location southeastasia \
+            --template-file infra/rg.bicep \
+            --parameters @"infra/rg-${{ github.event.inputs.environment }}.parameters.json"
 
-      - name: Deploy Bicep to Azure
+      - name: Deploy Storage Account
         run: |
+          RG_NAME=$(jq -r '.parameters.rgName.value' infra/rg-${{ github.event.inputs.environment }}.parameters.json)
           az deployment group create \
-            --resource-group $RESOURCE_GROUP \
+            --resource-group $RG_NAME \
             --template-file infra/str.bicep \
-            --parameters @"$PARAM_FILE"
-      
+            --parameters @"infra/str-${{ github.event.inputs.environment }}.parameters.json"
