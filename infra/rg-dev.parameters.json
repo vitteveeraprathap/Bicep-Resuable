@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "westus2"
+    },
+    "resourceGroupName": {
+      "value": "rg-dev123"
+    },
+    "tags": {
+      "value": {
+        "name": "rg-dev123",
+        "application-owner": "veera",
+        "sla-tier": "app tier 1",
+        "dr-tag": "gold",
+        "business-criticality": "mission-critical",
+        "environment": "development",
+        "purpose": "iot app development",
+        "department": "ntt ",
+        "cost-center": "510",
+        "technical-manager": "veera",
+        "application": "iiot",
+        "data-classification": "confidential"
+      }
+    }
+  }
+}
