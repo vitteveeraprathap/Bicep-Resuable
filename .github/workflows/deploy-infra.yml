@@ -33,7 +33,14 @@ jobs:
 
       - name: Validate Bicep file
         run: |
-          az bicep build --file infra/str.bicep
+          az bicep build --file infra/**.bicep
+
+      - name: Deploy RG 
+        run: |
+          az deployment sub create \
+            --location westus2 \
+            --template-file infra/rg.bicep
+            --parameters @"$PARAM_FILE"
 
       - name: Deploy Bicep to Azure
         run: |
@@ -41,3 +48,4 @@ jobs:
             --resource-group $RESOURCE_GROUP \
             --template-file infra/str.bicep \
             --parameters @"$PARAM_FILE"
+      
