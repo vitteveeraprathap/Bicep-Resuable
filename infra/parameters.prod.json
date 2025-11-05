@@ -1,13 +1,10 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
-  "contentVersion": "1.0.0.0",
   "parameters": {
-    "location": { "value": "southeastasia" },
-    "appServicePlanName": { "value": "prod-iot-appserv" },
-    "webAppName": { "value": "prod-iot-webap" },
-    "storageAccountName": { "value": "prodiotstora77" },
-    "keyVaultName": { "value": "prod-iot-kv015" },
-    "acrName": { "value": "prodiotacr019" },
-    "logAnalyticsName": { "value": "prod-iot-la015" }
+    "storageAccountName": {
+      "value": "uatstorageacct01"
+    },
+    "location": {
+      "value": "centralus"
+    }
   }
 }
