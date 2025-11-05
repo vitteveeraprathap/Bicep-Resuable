@@ -1,7 +1,6 @@
-@description('Name of the Resource Group')
-param rgName string
+targetScope = 'subscription'
 
-@description('Location for the Resource Group')
+param rgName string
 param location string = 'southeastasia'
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
