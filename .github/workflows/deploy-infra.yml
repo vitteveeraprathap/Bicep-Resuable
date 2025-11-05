@@ -10,7 +10,7 @@ on:
         type: choice
         options:
           - dev
-          - uat
+          - qa
           - prod
 
 jobs:
@@ -27,9 +27,9 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Set environment variables
-        id: set-vars
         run: |
           echo "PARAM_FILE=infra/parameters.${{ github.event.inputs.environment }}.json" >> $GITHUB_ENV
+          echo "RESOURCE_GROUP=${{ secrets.AZURE_RG }}" >> $GITHUB_ENV
 
       - name: Validate Bicep file
         run: |
@@ -38,6 +38,6 @@ jobs:
       - name: Deploy Bicep to Azure
         run: |
           az deployment group create \
-            --resource-group ${{ secrets.AZURE_RG }} \
+            --resource-group $RESOURCE_GROUP \
             --template-file infra/str.bicep \
-            --parameters @$PARAM_FILE
+            --parameters @"$PARAM_FILE"
