@@ -29,7 +29,7 @@ jobs:
       - name: Validate Bicep templates
         run: |
           az bicep build --file infra/rg.bicep
-          az bicep build --file infra/str.bicep
+        
 
       - name: Deploy Resource Group
         run: |
@@ -38,10 +38,4 @@ jobs:
             --template-file infra/rg.bicep \
             --parameters @"infra/rg-${{ github.event.inputs.environment }}.parameters.json"
 
-      - name: Deploy Storage Account
-        run: |
-          RG_NAME=$(jq -r '.parameters.rgName.value' infra/rg-${{ github.event.inputs.environment }}.parameters.json)
-          az deployment group create \
-            --resource-group $RG_NAME \
-            --template-file infra/str.bicep \
-            --parameters @"infra/str-${{ github.event.inputs.environment }}.parameters.json"
+     
