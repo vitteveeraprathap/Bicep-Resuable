@@ -1,4 +1,4 @@
-name: Deploy Azure Infrastructure
+name: rg-deploy-and-call-str
 
 on:
   workflow_dispatch:
@@ -8,15 +8,13 @@ on:
         required: true
         default: "dev"
         type: choice
-        options:
-          - dev
-          - uat
-          - prod
+        options: [dev, uat, prod]
 
 jobs:
-  deploy:
+  create-rg:
     runs-on: ubuntu-latest
-
+    outputs:
+      rg_name: ${{ steps.set-rg.outputs.rg_name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,16 +24,20 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Validate Bicep templates
-        run: |
-          az bicep build --file infra/rg.bicep
-        
+      - name: Validate rg.bicep
+        run: az bicep build --file infra/rg.bicep
 
-      - name: Deploy Resource Group
+      - name: Deploy subscription (create Resource Group)
+        id: deploy
         run: |
           az deployment sub create \
+            --name infra-rg-${{ github.event.inputs.environment }} \
             --location southeastasia \
             --template-file infra/rg.bicep \
             --parameters @"infra/rg-${{ github.event.inputs.environment }}.parameters.json"
 
-     
+    
+  
+    secrets:
+      # pass the Azure credentials secret to the reusable workflow
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
