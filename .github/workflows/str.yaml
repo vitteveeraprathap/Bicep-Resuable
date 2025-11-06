@@ -8,15 +8,15 @@ on:
         required: true
         default: "dev"
         type: choice
-        options:
-          - dev
-          - uat
-          - prod
+        options: [dev, uat, prod]
+      resource_group:
+        description: "Existing Resource Group name"
+        required: true
+        type: string
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,16 +26,12 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Validate Bicep templates
-        run: |
-          az bicep build --file infra/str.bicep
-        
+      - name: Validate Bicep template
+        run: az bicep build --file infra/str.bicep
 
-      - name: Deploy Resource Group
+      - name: Deploy 'str' into the specified RG
         run: |
-          az deployment sub create \
-            --location southeastasia \
+          az deployment group create \
+            --resource-group "${{ github.event.inputs.resource_group }}" \
             --template-file infra/str.bicep \
             --parameters @"infra/str-${{ github.event.inputs.environment }}.parameters.json"
-
-     
