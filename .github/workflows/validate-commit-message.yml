@@ -2,7 +2,7 @@ name: Validate Commit Message (JIRA ID check)
 
 on:
   push:
-    # run on feature branches immediately (change pattern fot test)
+    # run on feature branches immediately (checking pattern for test)
     branches:
       - 'feature/se-*'
   pull_request:
