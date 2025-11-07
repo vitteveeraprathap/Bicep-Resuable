@@ -1,0 +1,56 @@
+name: Validate Commit Message (JIRA ID check)
+
+on:
+  push:
+    branches:
+      - 'feature/se-*'     # 👈 run validation 
+  pull_request:
+    branches:
+      - develop
+      - master
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  validate-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate commit messages contain JIRA ID
+        run: |
+          echo "🔍 Validating commit messages..."
+
+          # Detect branch name
+          BRANCH="${{ github.head_ref || github.ref_name }}"
+          echo "Branch: $BRANCH"
+
+          # Extract JIRA ID pattern from branch name
+          if [[ "$BRANCH" =~ (feature/se-[0-9]+) ]]; then
+            JIRA_ID="${BASH_REMATCH[1]}"
+            echo "Expected JIRA ID: $JIRA_ID"
+          else
+            echo "::error::❌ Branch name does not match expected JIRA pattern (feature/se-####)"
+            exit 1
+          fi
+
+          # Get last 20 commit messages from this push or PR
+          COMMITS=$(git log -n 20 --pretty=format:"%s")
+          echo "---- Commit Messages ----"
+          echo "$COMMITS"
+          echo "--------------------------"
+
+          INVALID=false
+          while IFS= read -r msg; do
+            if [[ "$msg" != *"$JIRA_ID"* ]]; then
+              echo "::error::❌ Commit message missing required JIRA ID '$JIRA_ID': $msg"
+              INVALID=true
+            fi
+          done <<< "$COMMITS"
+
+          if [ "$INVALID" = true ]; then
+            echo "❌ One or more commits missing required JIRA ID ($JIRA_ID)."
+            exit 1
+          fi
+
+          echo "✅ All commits include required JIRA ID: $JIRA_ID"
