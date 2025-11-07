@@ -1,0 +1,45 @@
+name: Validate Commit Message
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - master
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  validate-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate commit messages contain JIRA ID
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          echo "Current branch: $BRANCH"
+
+          if [[ "$BRANCH" =~ (feature/se-[0-9]+) ]]; then
+            JIRA_ID="${BASH_REMATCH[1]}"
+            echo "Expected JIRA ID: $JIRA_ID"
+          else
+            echo "::warning::Branch name doesn't match JIRA pattern. Skipping strict check."
+            exit 0
+          fi
+
+          COMMITS=$(git log origin/${{ github.base_ref }}..HEAD --pretty=format:"%s")
+          echo "Checking commits between base and head..."
+          INVALID=false
+          while IFS= read -r msg; do
+            if [[ "$msg" != *"$JIRA_ID"* ]]; then
+              echo "::error::❌ Commit missing JIRA ID '$JIRA_ID': $msg"
+              INVALID=true
+            fi
+          done <<< "$COMMITS"
+
+          if [ "$INVALID" = true ]; then
+            echo "❌ One or more commits missing required JIRA ID."
+            exit 1
+          fi
+
+          echo "✅ All commit messages include JIRA ID '$JIRA_ID'."
