@@ -1,6 +1,9 @@
 name: Validate Commit Message (JIRA ID check)
 
 on:
+  push:
+    branches:
+      - 'feature/se-*'     # 👈 run validation immediately on push to feature branches
   pull_request:
     branches:
       - develop
@@ -18,22 +21,21 @@ jobs:
         run: |
           echo "🔍 Validating commit messages..."
 
-          # Get the PR source branch name (e.g., feature/se-9999)
-          BRANCH="${{ github.head_ref }}"
-          echo "Current branch: $BRANCH"
+          # Detect branch name
+          BRANCH="${{ github.head_ref || github.ref_name }}"
+          echo "Branch: $BRANCH"
 
-          # Extract the JIRA ID pattern from the branch name
+          # Extract JIRA ID pattern from branch name
           if [[ "$BRANCH" =~ (feature/se-[0-9]+) ]]; then
             JIRA_ID="${BASH_REMATCH[1]}"
-            echo "Expected JIRA ID in commit messages: $JIRA_ID"
+            echo "Expected JIRA ID: $JIRA_ID"
           else
-            echo "::error::❌ Branch name does not match expected JIRA pattern (feature/se-####)."
-            echo "Example: feature/se-4650"
+            echo "::error::❌ Branch name does not match expected JIRA pattern (feature/se-####)"
             exit 1
           fi
 
-          # Fetch all commit messages between base and head of the PR
-          COMMITS=$(git log origin/${{ github.base_ref }}..HEAD --pretty=format:"%s")
+          # Get last 20 commit messages from this push or PR
+          COMMITS=$(git log -n 20 --pretty=format:"%s")
           echo "---- Commit Messages ----"
           echo "$COMMITS"
           echo "--------------------------"
@@ -51,4 +53,4 @@ jobs:
             exit 1
           fi
 
-          echo "✅ All commits include the required JIRA ID: $JIRA_ID"
+          echo "✅ All commits include required JIRA ID: $JIRA_ID"
