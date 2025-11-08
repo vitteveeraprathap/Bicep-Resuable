@@ -18,7 +18,7 @@ jobs:
           BRANCH="${{ github.head_ref }}"
           echo "Source branch: $BRANCH"
 
-          # Allow ONLY branches that start with "feature/se-" followed by digits
+          # Allow ONLY branches that start with "feature/se-" followed
           if echo "$BRANCH" | grep -Eq '^feature/se-[0-9]+$'; then
             echo "✅ Branch name is valid (matches feature/se-#### pattern)"
           else
