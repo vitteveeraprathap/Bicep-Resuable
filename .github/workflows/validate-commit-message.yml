@@ -56,7 +56,7 @@ jobs:
             JIRA_ID="${BASH_REMATCH[1]}"
             echo "Expected JIRA ID (lowercased): $JIRA_ID"
           else
-            echo "::error::❌ Branch name does not match expected pattern 'feature/se-####': $BRANCH"
+            echo "::error::Branch name does not match expected pattern 'feature/se-####': $BRANCH"
             exit 1
           fi
 
@@ -97,14 +97,14 @@ jobs:
             fi
             msg_lc="$(echo "$msg" | tr '[:upper:]' '[:lower:]')"
             if [[ "$msg_lc" != *"${JIRA_ID}"* ]]; then
-              echo "::error::❌ Commit message missing required JIRA ID '$JIRA_ID': $msg"
+              echo "::error::Commit message missing required JIRA ID '$JIRA_ID': $msg"
               INVALID=true
             fi
           done <<< "$COMMITS"
 
           if [ "$INVALID" = true ]; then
-            echo "❌ One or more commits missing required JIRA ID ($JIRA_ID)."
+            echo "One or more commits missing required JIRA ID ($JIRA_ID)."
             exit 1
           fi
 
-          echo "✅ All scanned commit messages include required JIRA ID: $JIRA_ID"
+          echo "All scanned commit messages include required JIRA ID: $JIRA_ID"
