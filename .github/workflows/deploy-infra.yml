@@ -4,13 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: "Select environment (dev, qa, prod)"
+        description: "Select environment (prod)"
         required: true
         default: "dev"
         type: choice
         options:
-          - dev
-          - uat
           - prod
 
 jobs:
